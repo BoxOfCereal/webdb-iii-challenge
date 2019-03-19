@@ -9,4 +9,7 @@ server.get('/', (req, res) => {
   res.send(`please use the API routes '/api/endpoint' `)
 });
 
+const cohortsRoutes = require('./routes/cohorts');
+server.use('/api/cohorts', cohortsRoutes);
+
 module.exports = server;
