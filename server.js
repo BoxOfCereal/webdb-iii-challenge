@@ -1,5 +1,5 @@
 const express = require('express');
-const express = require('helmet');
+const helmet = require('helmet');
 const server = express();
 
 server.use(express.json());
