@@ -56,4 +56,30 @@ router.put("/:id", (req, res) => {
 		);
 });
 
+router.get("/:id", (req, res) => {
+	const { id } = req.params;
+	db.find(id)
+		.then(student => {
+			student
+				? res.status(200).json(student)
+				: res.status(404).json({ error: "student does not exist.", errno });
+		})
+		.catch(({ errno }) =>
+			res.status(500).json({ error: "student could not be found", errno })
+		);
+});
+
+router.delete("/:id", (req, res) => {
+	const { id } = req.params;
+	db.remove(id)
+		.then(count => {
+			count
+				? res.status(200).json({ message: "Student Deleted" })
+				: res.status(404).json({ error: "student does not exist.", errno });
+		})
+		.catch(({ errno }) =>
+			res.status(500).json({ error: "student could not be deleted", errno })
+		);
+});
+
 module.exports = router;
