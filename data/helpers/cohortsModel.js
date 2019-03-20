@@ -8,7 +8,12 @@ module.exports = {
     return db('cohorts')
       .where({ id: id })
   },
+  add: cohort => {
+    return db.insert(cohort)
+      .into('cohorts')
+      .then(ids => ids[0])
 
+  }
 
 
 }
