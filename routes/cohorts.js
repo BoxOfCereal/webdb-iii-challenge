@@ -46,6 +46,17 @@ router.put("/:id", (req, res) => {
 		);
 });
 
+router.delete("/:id", (req, res) => {
+	const { id } = req.params;
+	db.remove(id).then(count => {
+		if (count) {
+			res.status(200).json({ message: "The cohort was successfully deleted." });
+		} else {
+			res.status(404).json({ error: "The cohort does not exist." });
+		}
+	});
+});
+
 router.get("/:id/students", (req, res) => {
 	const { id } = req.params;
 	db.findStudentsByCohort(id)

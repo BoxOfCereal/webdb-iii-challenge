@@ -22,5 +22,10 @@ module.exports = {
 		return db("cohorts")
 			.where({ id: id })
 			.update(cohort);
+	},
+	remove: id => {
+		return db("cohorts")
+			.where({ id: Number(id) })
+			.del();
 	}
 };
