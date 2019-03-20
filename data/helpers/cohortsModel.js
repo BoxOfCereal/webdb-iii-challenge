@@ -17,5 +17,10 @@ module.exports = {
 		return db("cohorts")
 			.join("students", "students.cohort_id", "=", "cohorts.id")
 			.where("cohort_id", "=", `${id}`);
+	},
+	update: (id, cohort) => {
+		return db("cohorts")
+			.where({ id: id })
+			.update(cohort);
 	}
 };

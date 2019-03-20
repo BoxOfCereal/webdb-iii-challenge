@@ -30,6 +30,22 @@ router.get("/:id", (req, res) => {
 		);
 });
 
+router.put("/:id", (req, res) => {
+	const updatedCohort = req.body;
+	const { id } = req.params;
+	db.update(id, updatedCohort)
+		.then(count => {
+			if (count) {
+				db.findById(id).then(cohort => res.status(200).json(cohort));
+			} else {
+				res.status(404).json({ error: "The cohort does not exist." });
+			}
+		})
+		.catch(error =>
+			res.status(500).json({ error: "The cohorts could not be updated." })
+		);
+});
+
 router.get("/:id/students", (req, res) => {
 	const { id } = req.params;
 	db.findStudentsByCohort(id)
