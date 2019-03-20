@@ -25,4 +25,35 @@ router.post("/", (req, res) => {
 	}
 });
 
+router.get("/:id", (req, res) => {
+	const { id } = req.params;
+	db.find(id)
+		.then(student => {
+			if (!student) {
+				res.status(404).json({ error: "student does not exist." });
+			} else {
+				res.status(200).json(student);
+			}
+		})
+		.catch(({ errno }) =>
+			res.status(500).json({ error: "student could not be added", errno })
+		);
+});
+
+router.put("/:id", (req, res) => {
+	const { id } = req.params;
+	const updatedStudent = req.body;
+	db.update(id, updatedStudent)
+		.then(count => {
+			if (count) {
+				db.find(id).then(student => res.status(200).json(student));
+			} else {
+				res.status(404).json({ error: "student does not exist.", errno });
+			}
+		})
+		.catch(({ errno }) =>
+			res.status(500).json({ error: "student could not be updated", errno })
+		);
+});
+
 module.exports = router;

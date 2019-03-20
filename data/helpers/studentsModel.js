@@ -13,5 +13,10 @@ module.exports = {
 			.insert(student)
 			.into("students")
 			.then(ids => ids[0]);
+	},
+	update: (id, student) => {
+		return db("students")
+			.where({ id: id })
+			.update(student);
 	}
 };
