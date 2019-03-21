@@ -1,11 +1,17 @@
 const db = require("../dbConfig.js");
 
 module.exports = {
-	find: id => {
-		let query = db("students");
-		if (id) {
-			query.where({ id: id }).first();
-		}
+	find: _ => {
+		return "students";
+	},
+	findById: id => {
+		let query = db
+			.select("students.name as name", "cohorts.name as cohorts")
+			.where({ "students.id": id })
+			.from("students")
+			.join("cohorts", "students.cohort_id", "=", "cohorts.id")
+			.first();
+		console.log(query.toSQL().toNative());
 		return query;
 	},
 	add: student => {

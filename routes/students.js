@@ -27,17 +27,19 @@ router.post("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
 	const { id } = req.params;
-	db.find(id)
+	db.findById(id)
 		.then(student => {
+			console.log(student);
 			if (!student) {
 				res.status(404).json({ error: "student does not exist." });
 			} else {
 				res.status(200).json(student);
 			}
 		})
-		.catch(({ errno }) =>
-			res.status(500).json({ error: "student could not be added", errno })
-		);
+		.catch(error => {
+			console.log(error);
+			res.status(500).json({ error: "could not get student", errno });
+		});
 });
 
 router.put("/:id", (req, res) => {
